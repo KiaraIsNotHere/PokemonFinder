@@ -1,0 +1,168 @@
+import pandas as pd
+
+df = pd.read_csv("data.csv",index_col="Name")
+
+#print(df[["Name","Type1","Legendary"]].to_string())
+
+#print(df.loc["Bulbasaur":"Pikachu",["Legendary","Weight"]])
+
+print("++++++++ Pokemon Data Center ++++++++")
+print("1.Single Pokemon \n"
+      "2.All Pokemon\n"
+      "3.All Pokemon Aggregate\n"
+      "4.Group (1col - 1col)")
+
+
+    
+
+
+def pokeName():
+     while True:
+        inp = input("Enter pokemon name (or Q to quit): ").capitalize()
+        if inp == "Q":
+            print("Bye")
+            break
+        try:
+            print() 
+            print(  f"Name: {inp.capitalize()} \n"
+                    f"Type 1: {df.loc[inp,"Type1"]}\n"
+                    f"Type 2: {df.loc[inp,"Type2"]}\n"
+                    f"Weight: {df.loc[inp,"Weight"]} {"Weight" if round(df.loc[inp,"Weight"]) > round(df["Weight"].mean(numeric_only=True))  else "Light"}\n"
+                    f"Height: {df.loc[inp,"Height"]} {"Tall" if round(df.loc[inp,"Height"]) > round(df["Height"].mean(numeric_only=True))  else "Short"}\n"
+                    f"Legendary: {df.loc[inp,"Legendary"]}\n"
+                    )
+            print()
+        except KeyError:
+            print(f"{inp} not found")
+            inp = input("Enter pokemon name (after error): ").capitalize()
+
+def pokeData():
+    Runnin = True
+    while Runnin:
+        jumlah = input("Whole Pokemon or Single Pokemon (W/S): ").upper()
+        if jumlah not in ('W','S'):
+            print("Please enter only (W/S)")
+            continue
+        
+        print(f"You are Choosing {'Whole' if jumlah == 'W' else 'Single'}")
+
+        tipe = input("What do ya want 2 know ? (sum - mean - min - max - count - ALL of em): ").upper()
+
+        if tipe not in("MAX","MEAN","MIN","SUM","COUNT"):
+            print("Please insert only (sum - mean - min - max - count)")
+            continue
+        
+        if jumlah == 'W' and tipe == "MAX":
+            print(df.max(numeric_only=True))
+        elif jumlah == 'W' and tipe == "MEAN":
+            print(df.mean(numeric_only=True))
+        elif jumlah == 'W' and tipe == "SUM":
+            print(df.sum(numeric_only=True))
+        elif jumlah == 'W' and tipe == "MIN":
+            print(df.min(numeric_only=True))
+        elif jumlah == 'W' and tipe == "COUNT":
+            print(df.count())
+
+        if jumlah == 'S':
+            col = input("Which coloumn would you like to know (Type1/2 - Height - Weight - legendary): ").upper()
+            
+            if col not in("TYPE1","TYPE2","HEIGHT","WEIGHT","LEGENDARY"):
+                continue
+            elif tipe == "MEAN":
+                print(df[col.capitalize()].mean(numeric_only= True))
+            elif tipe == "COUNT":
+                print(df[col.capitalize()].count())
+            elif tipe == "MAX":
+                print(df[col.capitalize()].max(numeric_only= True))
+            elif tipe == "MIN":
+                print(df[col.capitalize()].min(numeric_only= True))
+            elif tipe == "SUM":
+                print(df[col.capitalize()].sum(numeric_only= True))
+
+#print(round(df["Weight"].mean(numeric_only=True)))
+def gerup():
+    runnin = True
+    while runnin:
+        inp1 = input("Enter 1st Group (only Name - Type1/2): ").capitalize()
+        if inp1 not in ("Name","Type1","Type2"):
+            print("Please only enter (Name - Type1/2)")
+            continue
+        else:
+            inp2 = input("Enter 2nd Group (only Height - Weight - Legendary): ").capitalize()
+            if inp2 not in("Height","Weight","Legendary"):
+                print("Please only enter (Height - Weight - Legendary): ")
+                
+            runnin = False
+        print(inp1,inp2)
+
+gerup()
+"""
+ussr = input("Enter your choice: ")
+if ussr == '1':
+    pokeName()
+elif ussr == '2':
+    print(df.to_string())
+elif ussr == '3':
+    print(pokeData())
+elif ussr == '4':
+    print(gerup())
+"""
+
+"""
+if float(df["Height"].mean(numeric_only=True)) > float(df.loc["Dratini","Height"]):
+    print("Mean lebih Tinggi")
+    print("Mean",f"{float(df["Height"].mean(numeric_only=True)):.2f}")
+    print("Poke",df.loc["Dratini","Height"])
+else:
+    print("Poke lebih Tinggi")
+    print("Mean",f"{float(df["Height"].mean(numeric_only=True)):.2f}")
+    print("Poke",df.loc["Dratini","Height"])
+    """
+
+
+
+
+new ="""⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣄⣠⡤⠤⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠌
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠴⠶⢻⣿⠿⢿⣗⠦⠰⠶⠂⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⢀⠀⡀⠀⠀⠀⢀⠠⠀⠐⠀⠈⠀⡁⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠤⠭⢤⡔⣛⠟⡛⠛⠛⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠄⠐⠀⡀⠀⡐⠀⠐⠀⠀⠄⠡⢈⠀⠂⠄⢂
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡑⠒⠶⢬⣅⣵⡶⣬⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢂⠀⠄⡀⢀⠐⡀⠈⡐⢈⠐⠠⣈⠐⢨⢀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⠖⠀⠀⡀⠈⠻⢦⡑⣒⢾⡟⠓⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠂⠐⡀⠂⢀⠁⠄⠂⠌⠡⠠⢘⠠⢂
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⢋⣆⡀⠀⠿⠀⠀⠐⠲⡤⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠁⢀⠐⠀⢂⠠⢁⠊⡔⠁⢎⡐⢣
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⡿⠡⠏⠿⠁⢈⣧⠀⠀⠠⠖⣦⣤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠄⡈⠠⠀⡐⣞⠰⢠⠉⢆⡸⢡
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⠏⡐⠁⠀⠀⢀⣾⣿⣿⣃⡀⠀⣚⡛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠠⢁⠠⠐⡅⢃⠆⡉⢆⡜⣡
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠋⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿⣧⣅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⡀⢂⠘⠠⡁⢎⠰⣊⠴⣱
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣄⡓⢦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠂⠎⡐⠰⢨⠱⣌⢳⣹
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠈⡄⢨⠑⢢⠓⡌⣶⢱
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⢀⠐⡈⠔⡨⢒⡱⡘⢦
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠉⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡞⠿⡤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠨⠐⠠⠘⢠⢃⠶⡹⣜
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣆⠀⡀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣛⢽⣒⡵⣄⢆⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠔⠈⠄⠡⢂⠍⡲⢱⡸
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⡄⣹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⡞⣭⣯⡿⣿⣟⣯⢹⡐⢆⢆⡤⢐⡒⢆⠀⠀⠀⠀⠀⠀⠀⢀⡁⡐⠈⠄⠣⢌⡱⢣⣙
+⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣄⡈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣿⣿⣿⣿⣿⣿⣿⢻⣟⡱⡙⢆⡻⢻⠳⠖⠢⣁⠞⡼⣞⣼⢧⡘⣀⠂⠄⠀⠀⠀⠀⠀⠂⠀⠠⠈⠄⢃⠢⡑⢦⢩
+⠀⠀⠀⠀⠀⠀⠀⣼⠁⠈⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡶⠖⠾⠌⠉⠙⠛⠛⠷⠚⡤⢡⠉⠀⠣⠔⡢⠉⠔⡡⠞⠿⠭⠿⢋⠗⢂⠱⠀⠀⠀⠀⠀⠀⠀⠁⡁⠐⡈⠄⢣⠑⡎⡜
+⠀⠀⠀⠀⠀⠀⠀⢸⠀⡄⣸⣤⡘⣿⣿⣿⣿⣿⣿⣁⣤⠶⠒⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⠀⠐⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠐⠀⡁⠐⡈⠄⠃⡜⡘
+⠀⠀⠀⠀⠀⠀⠀⠀⢳⠀⣿⠉⠀⣼⣿⣿⣿⣿⡏⠉⢁⣠⣔⠷⡀⢀⣠⠗⠀⠀⠀⡀⢹⣿⣷⠀⠀⠀⠀⠀⢠⡆⠐⠀⢠⡄⠀⠀⠀⠀⠀⠀⠀⠀⢰⡇⢀⡐⠀⡐⢀⠠⢁⠰⠡
+⠀⠀⠀⠀⠀⠀⠀⠀⠈⣇⢿⡀⢼⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠶⠤⣉⠀⠀⠀⠀⣠⠀⣼⣿⡟⠀⠀⢰⡀⠐⠒⣈⠒⠒⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠼⠀⢀⠔⠠⠐⢀⠂⠄⡡⢊
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣎⢷⣆⢻⣿⣿⣿⣿⣿⣿⣿⣷⣦⣴⠦⠆⠀⠀⢀⣴⣿⣿⣿⣿⡅⠀⠀⠀⠹⡄⠀⠄⠉⠈⠀⠀⠀⢀⠠⠀⠀⠀⠀⠀⠀⠀⠠⠁⡐⢀⠂⢈⠐⡀⠆
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿⡍⢁⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣣⢆⣠⣶⣿⠿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠡⢂⡀⠀⢀⡀⢠⡉⠞⠀⠀⠀⠀⠀⠀⠀⠌⠐⡀⠑⠠⠈⠄⠂⢌⠰
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⢿⠿⢹⣿⣿⣿⣿⣿⣟⣿⣿⣿⣿⣿⡿⠟⠁⠀⣿⣿⣿⣿⡟⠀⠀⠀⠀⢰⣎⢽⣻⠦⡜⠠⠑⠀⠀⠀⠀⠀⠀⠀⠠⠈⠄⠠⢁⠂⠡⢈⠐⢂⠌
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⣰⣿⣿⣿⣿⡷⠀⠀⠀⠀⠲⣜⢶⣋⠳⡈⠁⠄⠀⠀⠀⠀⠀⠀⢀⠡⠐⡈⠐⢠⠈⠔⢂⡉⢄⠊
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣷⢮⡅⢀⡰⡿⠟⠿⣿⠙⠿⡄⠀⠀⠀⠀⠜⠢⢌⠐⠀⠂⠀⠀⠀⠀⠀⠀⠠⠀⢂⠐⠠⡉⢄⠊⡜⢠⠐⡌⡘
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⣠⣾⡏⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠠⡝⠰⠈⡀⠒⠄⡈⠀⠀⠀⠀⠂⠁⠌⠠⠈⠔⡐⢈⠒⡌⢢⠑⡤⢃
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣈⠠⢀⠡⢉⠀⠀⠀⠀⠀⠀⠡⢈⠠⠁⢌⠰⢈⠆⡱⢈⠦⡙⠴⣩
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠅⠂⡌⡠⠁⠀⠀⠀⢲⠶⠤⠄⢀⡀⠁⠂⠢⠌⠢⡑⣌⠲⣉⠶⣡
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⠘⣿⣿⣿⣿⣿⣿⣿⠟⠉⠀⢀⣀⣁⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠡⡀⠅⠀⠀⠀⠀⠀⢶⡀⠀⢦⣍⠛⠷⢦⣄⣑⠂⠦⢳⡜⣎⠵
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⡇⠹⣟⢿⣿⣿⣿⣿⣧⣶⣾⣿⣿⡿⠟⠉⠀⡀⢤⠋⠀⠄⡄⢂⠈⡐⠡⠀⠀⠈⠀⠀⠀⠀⠀⠀⢾⣿⣿⡝⣶⣎⠻⣿⣶⣷⣯⣼⣻
+⠀⠀⠀⠀⡀⠄⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⡿⣆⠻⣦⠻⢿⣿⣿⣣⡝⣌⠁⠀⠀⠀⠀⠀⠈⠐⢈⡒⢈⠀⡀⠐⠀⡁⠐⠀⠀⠀⠀⠀⠀⠀⠀⠈⠹⣿⣿⣶⣝⣷⡙⢿⣿⣿⣿⣿
+⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⡎⢦⡘⢷⣄⠙⠻⣧⣿⣟⣿⣷⣾⣿⣿⣿⣿⣿⡳⡘⢄⢂⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠈⢻⣿⣿⣼⣷⠈⢿⣿⣿⣿
+⠀⠀⠘⠀⠀⠘⠀⣠⣿⣿⣿⠟⣿⣿⡿⠟⣿⣿⡀⣤⣄⡛⢧⣄⠛⢿⣿⣿⣿⣿⡿⠿⠟⠛⢃⠃⡘⠀⠄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠇⠀⢻⣿⣿⡿⣇⢸⣿⣿⣿
+⠀⠈⢀⠀⠂⣠⣾⣿⠟⢰⡏⢸⣿⣿⡇⠀⣿⣿⣧⠘⣛⣻⣦⡉⠳⣤⡉⠛⠉⠉⠀⠁⠀⠐⠠⠐⠀⡈⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠌⡐⠀⢻⣧⣛⡽⣦⡙⢿⣿
+⠠⢁⠂⣠⣾⣿⣿⡟⢀⣿⠁⢸⣿⣿⣆⡀⠿⠛⢿⣦⡹⢏⠌⠙⠷⢤⠉⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠠⠀⠀⠀⠀⠀⠀⠈⡔⠡⡀⢼⣻⡽⣿⡜⡌⢿
+⠐⢠⣼⣿⢏⣿⣿⠀⣼⡇⠀⢸⡿⣿⢿⣿⣷⣄⡀⠈⠑⣊⠆⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠄⠈⠀⠀⠠⢀⠈⠀⣑⠢⢈⠱⣍⠺⣿⣿⣷⣿⣞⡬
+⣴⣿⠿⣫⣾⣿⡿⢸⣿⠁⠀⢻⣷⠹⣧⢿⣿⣿⣿⣆⡀⠀⠀⠠⠐⠦⠳⠦⢄⡀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⢀⠀⡐⠠⠀⠀⢀⠀⢂⠁⠂⠄⠀⢆⠳⡌⠲⢭⣷⣻⣿⣿⣿⣿⣷
+⣿⣿⣿⣟⠹⣿⡇⣿⡟⣀⠀⢸⣿⡇⠘⣮⡙⣿⣾⣿⣿⡷⣤⡀⠀⠂⠉⠐⠂⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠐⠀⠄⠡⢈⠀⡐⠠⠈⡌⠀⠐⢪⡱⣍⢞⣳⣯⣟⢿⣿⡿⣿⣿
+⣿⣿⣿⣿⣷⡹⢸⣟⣵⣿⠀⢸⣿⣿⠀⢈⠻⣌⠛⣿⡟⣿⣿⣿⣧⣄⣀⠀⡀⢀⣠⡶⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⡈⠠⠁⡀⠂⢄⡁⢒⠠⠀⢨⡑⢞⣽⣮⠽⣿⢍⡎⣿⣻⢾⣿
+⣿⣿⣿⣿⣿⣿⣎⢻⣿⣿⠀⠈⣿⣿⡇⢈⣣⡘⢷⣽⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⢁⢂⡘⣀⠣⠀⢠⡝⣮⢛⣧⡛⣜⡳⡜⣧⣟⣿⣽
+⠁⠙⢿⣿⣿⣿⣿⡦⠙⣿⠀⠀⣿⣿⣿⣿⣹⣯⣤⠙⠻⣟⠻⣿⣏⣿⣿⣿⣿⣿⢯⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⡐⢀⠈⠀⠄⣐⠈⠱⢀⢲⡙⢦⣋⢾⣱⠸⣔⡻⣵⡿⣾⣿
+⣿⣿⣶⣍⠒⠐⠀⠁⠀⠈⠂⠀⢿⣿⣿⣿⣾⣿⠗⢸⣇⠈⠻⣾⣻⣿⣿⣿⣿⣿⡟⠀⠀⠀⢀⠠⡀⠀⠀⠀⠀⠀⠀⢜⡀⢎⡱⢢⣄⣉⠁⢂⠦⣙⢦⣛⣼⡧⣿⡌⢷⢯⣿⣿⣿
+⣿⣿⣿⣿⢀⡀⠀⠀⠀⠀⠀⠀⠸⡟⣯⢾⡏⠀⣀⢈⣿⣆⢦⠉⠻⢿⣿⡟⢻⡿⠁⢀⠠⡜⣠⢃⡔⠀⡀⠀⠀⠀⢀⠀⠈⠰⣽⡣⢎⠳⢻⡜⠢⣽⢶⣭⢾⣿⣿⣽⣯⣷⣿⣟⣿"""
+
