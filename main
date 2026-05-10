@@ -15,8 +15,9 @@ print("1.Single Pokemon \n"
 
     
 
-
+# 1
 def pokeName():
+     print("You are choosing Single pokemon")
      while True:
         inp = input("Enter pokemon name (or Q to quit): ").capitalize()
         if inp == "Q":
@@ -36,6 +37,7 @@ def pokeName():
             print(f"{inp} not found")
             inp = input("Enter pokemon name (after error): ").capitalize()
 
+# 2
 def pokeData():
     Runnin = True
     while Runnin:
@@ -80,7 +82,7 @@ def pokeData():
                 method, kwargs = ops[tipe]
                 print(getattr(df[col.capitalize()], method)(**kwargs))
 
-#This 1 use Groupby
+# 3
 def gerup():
     runnin = True
     while runnin:
@@ -120,15 +122,22 @@ def gerup():
 
 
 
-ussr = input("Enter your choice: ")
-if ussr == '1':
-    pokeName()
-elif ussr == '2':
-    print(df.to_string())
-elif ussr == '3':
-    print(pokeData())
-elif ussr == '4':
-    print(gerup())
+ussr = input("Enter your choice (q2quit): ")
+berlari = True
+while berlari:
+    if ussr == '1':
+        pokeName()
+    elif ussr == '2':
+        print(df.to_string())
+        berlari = False
+    elif ussr == '3':
+        print("Here is all pokemon information")
+        print(pokeData())
+    elif ussr == '4':
+        print(gerup())
+    elif ussr == "Q":
+        berlari = False
+        print("Have a nice day")
 
 
 
